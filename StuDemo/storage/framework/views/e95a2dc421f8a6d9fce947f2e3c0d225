@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><?php echo $__env->yieldContent('title'); ?></title>
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/all.css')); ?>">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <?php if(Auth::guest()): ?>
+                    <a href="/" class="navbar-brand">学生成绩管理</a>
+                <?php else: ?>
+                    <?php if(Auth::user()->is_admin): ?>
+                        <a href="/admin" class="navbar-brand">学生成绩管理</a>
+                    <?php else: ?>
+                        <a href="/" class="navbar-brand">学生成绩管理</a>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="http://www.golaravel.com" target="__blank">Power by Laravel5.2</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <?php if(Auth::guest()): ?>
+                    <?php else: ?>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo e(Auth::user()->name); ?><span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="<?php echo e(url('/logout')); ?>">退出</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+         <?php echo $__env->make('flash', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    </div>
+    <?php echo $__env->yieldContent('content'); ?>
+    <script type="text/javascript" src="<?php echo e(asset('/js/all.js')); ?>"></script>
+</body>
+</html>
